@@ -14,6 +14,7 @@ services:
       KAFKA_CLUSTERS_0_METRICS_PORT: 5556,5556,5556
     profiles:
       - infrastructure
+      - producers
  
   zookeeper:
     image: bitnami/zookeeper:3.8
@@ -21,6 +22,7 @@ services:
       - ALLOW_ANONYMOUS_LOGIN=yes
     profiles:
       - infrastructure
+      - producers
 
   kafka-1:
     image: bitnami/kafka:3.3.1
@@ -46,6 +48,7 @@ services:
       JMX_PORT: 5556
     profiles:
       - infrastructure
+      - producers
 
   kafka-2:
     image: bitnami/kafka:3.3.1
@@ -71,6 +74,7 @@ services:
       JMX_PORT: 5556
     profiles:
       - infrastructure
+      - producers
 
   kafka-3:
     image: bitnami/kafka:3.3.1
@@ -96,6 +100,7 @@ services:
       JMX_PORT: 5556
     profiles:
       - infrastructure
+      - producers
 
   kafka-init-topics:
     image: bitnami/kafka:3.3.1
@@ -109,6 +114,7 @@ services:
     command: /opt/bitnami/scripts/kafka/create-content.sh
     profiles:
       - infrastructure
+      - producers
 
   mongo:
     image: mongo:6.0.3
@@ -127,6 +133,7 @@ services:
       - POSTGRES_USER=scott
     profiles:
       - infrastructure
+      - producers
 
   producer-1:
     build:
@@ -136,6 +143,8 @@ services:
       - .env
     environment:
       - PRODUCER_ID=1
+    mem_limit: 256m
+    mem_reservation: 128m
     depends_on:
       - kafka-1
       - kafka-2
@@ -152,6 +161,8 @@ services:
       - .env
     environment:
       - PRODUCER_ID=2
+    mem_limit: 256m
+    mem_reservation: 128m
     depends_on:
       - kafka-1
       - kafka-2
@@ -168,6 +179,8 @@ services:
       - .env
     environment:
       - PRODUCER_ID=3
+    mem_limit: 256m
+    mem_reservation: 128m
     depends_on:
       - kafka-1
       - kafka-2
