@@ -112,14 +112,45 @@ services:
       - POSTGRES_DB=kenv
       - POSTGRES_USER=scott
 
-  producer:
+  producer-1:
     build:
       context: producer
     restart: on-failure
     env_file:
       - .env
+    environment:
+      - PRODUCER_ID=1
     depends_on:
       - kafka-1
       - kafka-2
       - kafka-3
       - postgres
+
+  producer-2:
+    build:
+      context: producer
+    restart: on-failure
+    env_file:
+      - .env
+    environment:
+      - PRODUCER_ID=2
+    depends_on:
+      - kafka-1
+      - kafka-2
+      - kafka-3
+      - postgres
+
+  producer-3:
+    build:
+      context: producer
+    restart: on-failure
+    env_file:
+      - .env
+    environment:
+      - PRODUCER_ID=3
+    depends_on:
+      - kafka-1
+      - kafka-2
+      - kafka-3
+      - postgres
+  

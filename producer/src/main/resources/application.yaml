@@ -25,20 +25,19 @@ spring:
 producer:
   job.steps:
     users-retrieval:
-      total-items: ${USERS_RETRIEVAL_TOTAL_ITEMS:5000}
+      total-items: ${USERS_RETRIEVAL_TOTAL_ITEMS:1000}
       chunk-size: ${USERS_RETRIEVAL_CHUNK_SIZE:100}
       buffered-items: ${USERS_RETRIEVAL_BUFFERED_ITEMS:250}
-      failure-chance-rate: ${USERS_RETRIEVAL_FAILURE_CHANCE_RATE:0.0001}
+      failure-chance-rate: ${USERS_RETRIEVAL_FAILURE_CHANCE_RATE:0}
     addresses-retrieval:
-      total-items: ${ADDRESSES_RETRIEVAL_TOTAL_ITEMS:10000}
+      total-items: ${ADDRESSES_RETRIEVAL_TOTAL_ITEMS:5000}
       chunk-size: ${ADDRESSES_RETRIEVAL_CHUNK_SIZE:200}
       buffered-items: ${ADDRESSES_RETRIEVAL_BUFFERED_ITEMS:400}
-      failure-chance-rate: ${ADDRESSES_RETRIEVAL_FAILURE_CHANCE_RATE:0.0001}
+      failure-chance-rate: ${ADDRESSES_RETRIEVAL_FAILURE_CHANCE_RATE:0}
   kafka.topics:
     users: ${KAFKA_TOPICS_USERS:users}
     addresses: ${KAFKA_TOPICS_ADDRESSES:addresses}
 
 logging.level:
   root: ${LOGGING_LEVEL_ROOT:INFO}
-  io.netty.handler.ssl: DEBUG
   com.github.marceloleite2604.kafkaenvironment.producer: ${LOGGING_LEVEL_APP:DEBUG}
