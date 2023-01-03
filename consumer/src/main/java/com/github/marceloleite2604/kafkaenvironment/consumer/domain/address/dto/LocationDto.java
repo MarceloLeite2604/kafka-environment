@@ -12,9 +12,12 @@ import lombok.extern.jackson.Jacksonized;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Getter
-public class StreetDto {
+public class LocationDto {
+    private final StreetDto street;
 
-    private final String name;
+    private final String city;
 
-    private final int number;
+    private final String state;
+
+    private final String country;
 }
