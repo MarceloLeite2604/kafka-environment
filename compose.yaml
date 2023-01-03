@@ -13,7 +13,6 @@ services:
       KAFKA_CLUSTERS_0_NAME: "Kluster"
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-1:9093,kafka-2:9092,kafka-3:9092
       KAFKA_CLUSTERS_0_METRICS_PORT: 5556,5556,5556
-      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schema-registry:8081
  
   zookeeper:
     image: bitnami/zookeeper:3.8
@@ -23,7 +22,6 @@ services:
   kafka-1:
     image: bitnami/kafka:3.3.1
     hostname: kafka-1
-    container_name: kafka-1
     ports:
       - "9092:9092"
     depends_on:
@@ -47,7 +45,6 @@ services:
   kafka-2:
     image: bitnami/kafka:3.3.1
     hostname: kafka-2
-    container_name: kafka-2
     ports:
       - "9093:9093"
     depends_on:
@@ -71,7 +68,6 @@ services:
   kafka-3:
     image: bitnami/kafka:3.3.1
     hostname: kafka-3
-    container_name: kafka-3
     ports:
       - "9094:9094"
     depends_on:
@@ -92,19 +88,6 @@ services:
       KAFKA_CFG_LOG_DIRS: '/tmp/logs'
       JMX_PORT: 5556
 
-  schema-registry:
-    image: bitnami/schema-registry:7.3
-    ports:
-      - 8081:8081
-    depends_on:
-      - kafka-1
-      - kafka-2
-      - kafka-3
-    environment:
-      SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      SCHEMA_REGISTRY_LISTENERS: http://schema-registry:8081
-      SCHEMA_REGISTRY_KAFKA_BROKERS: PLAINTEXT://kafka-1:9093,PLAINTEXT://kafka-2:9092,PLAINTEXT://kafka-3:9092
-
   kafka-init-topics:
     image: bitnami/kafka:3.3.1
     restart: on-failure
@@ -113,5 +96,5 @@ services:
       - kafka-2
       - kafka-3
     volumes:
-      - ./kafka-init-topics/create-content.sh:/opt/bitnami/scripts/kafka/create-content.sh
+      - ./docker/kafka-init-topics/create-content.sh:/opt/bitnami/scripts/kafka/create-content.sh
     command: /opt/bitnami/scripts/kafka/create-content.sh
