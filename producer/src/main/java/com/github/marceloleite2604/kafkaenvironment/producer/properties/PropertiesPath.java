@@ -9,5 +9,13 @@ public class PropertiesPath {
 
   public static final String KAFKA = BASE_PATH + ".kafka";
 
-  public static final String USER_RETRIEVAL_JOB = BASE_PATH + ".jobs.user-retrieval";
+  @UtilityClass
+  public static class Jobs {
+
+    private static final String JOBS_PATH = BASE_PATH + ".jobs";
+
+    public static final String USERS_RETRIEVAL = JOBS_PATH + ".users-retrieval";
+
+    public static final String ADDRESSES_RETRIEVAL = JOBS_PATH + ".addresses-retrieval";
+  }
 }

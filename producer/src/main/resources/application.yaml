@@ -16,12 +16,17 @@ spring:
 
 producer:
   jobs:
-    user-retrieval:
-      total-users: 1
-      chunk-size: 1
-      buffered-users: 1
+    users-retrieval:
+      total-items: 250
+      chunk-size: 50
+      buffered-items: 250
+    addresses-retrieval:
+      total-items: 500
+      chunk-size: 100
+      buffered-items: 10
   kafka.topics:
       users: users
+      addresses: addresses
 
 logging.level:
   root: INFO

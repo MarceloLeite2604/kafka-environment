@@ -9,6 +9,4 @@ import org.springframework.validation.annotation.Validated;
 
 @Validated
 @ConfigurationProperties(PropertiesPath.KAFKA)
-public record KafkaProperties(
-    @NotEmpty Map<KafkaTopic, String> topics
-) {}
+public record KafkaProperties(@NotEmpty Map<KafkaTopic, String> topics) {}

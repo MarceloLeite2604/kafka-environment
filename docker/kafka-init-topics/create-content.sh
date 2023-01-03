@@ -8,7 +8,7 @@
   --bootstrap-server kafka-2:29092;
 
 /opt/bitnami/kafka/bin/kafka-topics.sh --create \
-  --topic messages \
+  --topic addresses \
   --partitions 2 \
   --replication-factor 1 \
   --if-not-exists \
