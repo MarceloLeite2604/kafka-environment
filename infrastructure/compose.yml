@@ -1,0 +1,90 @@
+services:
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    restart: on-failure
+    ports:
+      - 8080:8080
+    environment:
+      KAFKA_CLUSTERS_0_NAME: "Kluster"
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-1:29092,kafka-2:29092,kafka-3:29092
+      KAFKA_CLUSTERS_0_METRICS_PORT: 5556
+ 
+  zookeeper:
+    image: bitnami/zookeeper:3.8
+    restart: on-failure
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+
+  kafka-1:
+    image: bitnami/kafka:3.3.1
+    restart: on-failure
+    hostname: kafka-1
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_CFG_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CFG_LISTENERS: 'DOCKER://:29092,HOST://:9092'
+      KAFKA_CFG_ADVERTISED_LISTENERS: 'DOCKER://:29092,HOST://localhost:9092'
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: 'DOCKER:PLAINTEXT,HOST:PLAINTEXT'
+      KAFKA_CFG_BROKER_ID: 1
+      ALLOW_PLAINTEXT_LISTENER: 'yes'
+      KAFKA_CFG_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CFG_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_CFG_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_CFG_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_CFG_NODE_ID: 1
+      KAFKA_CFG_INTER_BROKER_LISTENER_NAME: 'DOCKER'
+      KAFKA_CFG_LOG_DIRS: '/tmp/logs'
+      JMX_PORT: 5556
+
+  kafka-2:
+    image: bitnami/kafka:3.3.1
+    restart: on-failure
+    hostname: kafka-2
+    ports:
+      - "9093:9092"
+    environment:
+      KAFKA_CFG_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CFG_LISTENERS: 'DOCKER://:29092,HOST://:9092'
+      KAFKA_CFG_ADVERTISED_LISTENERS: 'DOCKER://:29092,HOST://localhost:9093'
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: 'DOCKER:PLAINTEXT,HOST:PLAINTEXT'
+      KAFKA_CFG_BROKER_ID: 2
+      ALLOW_PLAINTEXT_LISTENER: 'yes'
+      KAFKA_CFG_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CFG_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_CFG_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_CFG_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_CFG_NODE_ID: 2
+      KAFKA_CFG_INTER_BROKER_LISTENER_NAME: 'DOCKER'
+      KAFKA_CFG_LOG_DIRS: '/tmp/logs'
+      JMX_PORT: 5556
+
+  kafka-3:
+    image: bitnami/kafka:3.3.1
+    restart: on-failure
+    hostname: kafka-3
+    ports:
+      - "9094:9092"
+    environment:
+      KAFKA_CFG_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CFG_LISTENERS: 'DOCKER://:29092,HOST://:9092'
+      KAFKA_CFG_ADVERTISED_LISTENERS: 'DOCKER://:29092,HOST://localhost:9094'
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: 'DOCKER:PLAINTEXT,HOST:PLAINTEXT'
+      KAFKA_CFG_BROKER_ID: 3
+      ALLOW_PLAINTEXT_LISTENER: 'yes'
+      KAFKA_CFG_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CFG_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_CFG_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_CFG_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_CFG_NODE_ID: 3
+      KAFKA_CFG_INTER_BROKER_LISTENER_NAME: 'DOCKER'
+      KAFKA_CFG_LOG_DIRS: '/tmp/logs'
+      JMX_PORT: 5556
+
+  kafka-init-topics:
+    image: bitnami/kafka:3.3.1
+    restart: on-failure
+    volumes:
+      - ./kafka-init-topics/create-content.sh:/opt/bitnami/scripts/kafka/create-content.sh
+    command: /opt/bitnami/scripts/kafka/create-content.sh
+  
