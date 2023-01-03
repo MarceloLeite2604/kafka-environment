@@ -1,6 +1,7 @@
 package com.github.marceloleite2604.kafkaenvironment.producer.configuration;
 
-import com.github.marceloleite2604.kafkaenvironment.producer.entity.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.marceloleite2604.kafkaenvironment.producer.domain.user.User;
 import com.github.marceloleite2604.kafkaenvironment.producer.properties.UserRetrievalJobProperties;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.repository.JobRepository;
@@ -20,7 +21,8 @@ public class UserRetrievalStepConfiguration {
       PlatformTransactionManager platformTransactionManager,
       UserRetrievalJobProperties userRetrievalJobProperties,
       ItemReader<User> userStreamReader,
-      ItemWriter<User> kafkaUserStreamWriter) {
+      ItemWriter<User> kafkaUserStreamWriter,
+      ObjectMapper objectMapper) {
 
     return new StepBuilder("User retrieval", jobRepository).<User, User>chunk(userRetrievalJobProperties.chunkSize(),
             platformTransactionManager)
@@ -28,4 +30,5 @@ public class UserRetrievalStepConfiguration {
         .writer(kafkaUserStreamWriter)
         .build();
   }
+
 }

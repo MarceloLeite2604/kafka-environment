@@ -1,9 +1,8 @@
 package com.github.marceloleite2604.kafkaenvironment.producer.configuration;
 
 import lombok.experimental.UtilityClass;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration
+@UtilityClass
 public class KafkaConfiguration {
 
   @UtilityClass

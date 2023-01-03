@@ -1,7 +1,7 @@
 package com.github.marceloleite2604.kafkaenvironment.producer.writer;
 
 import com.github.marceloleite2604.kafkaenvironment.producer.configuration.KafkaConfiguration;
-import com.github.marceloleite2604.kafkaenvironment.producer.entity.User;
+import com.github.marceloleite2604.kafkaenvironment.producer.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.configuration.annotation.StepScope;

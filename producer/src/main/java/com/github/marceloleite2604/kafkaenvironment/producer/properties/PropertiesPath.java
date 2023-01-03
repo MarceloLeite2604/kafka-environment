@@ -7,5 +7,7 @@ public class PropertiesPath {
 
   private static final String BASE_PATH = "producer";
 
+  public static final String KAFKA = BASE_PATH + ".kafka";
+
   public static final String USER_RETRIEVAL_JOB = BASE_PATH + ".jobs.user-retrieval";
 }

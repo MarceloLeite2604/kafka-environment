@@ -2,7 +2,7 @@ package com.github.marceloleite2604.kafkaenvironment.producer.reader;
 
 import java.util.Iterator;
 
-import com.github.marceloleite2604.kafkaenvironment.producer.entity.User;
+import com.github.marceloleite2604.kafkaenvironment.producer.domain.user.User;
 import com.github.marceloleite2604.kafkaenvironment.producer.properties.UserRetrievalJobProperties;
 import com.github.marceloleite2604.kafkaenvironment.producer.service.UserService;
 import lombok.RequiredArgsConstructor;

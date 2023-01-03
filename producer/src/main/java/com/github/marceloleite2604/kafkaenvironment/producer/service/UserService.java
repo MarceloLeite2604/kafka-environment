@@ -1,7 +1,7 @@
 package com.github.marceloleite2604.kafkaenvironment.producer.service;
 
-import com.github.marceloleite2604.kafkaenvironment.producer.entity.RandomUserResponse;
-import com.github.marceloleite2604.kafkaenvironment.producer.entity.User;
+import com.github.marceloleite2604.kafkaenvironment.producer.domain.RandomUserResponse;
+import com.github.marceloleite2604.kafkaenvironment.producer.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
@@ -20,6 +20,7 @@ public class UserService {
     log.debug("Retrieving {} user(s) from randomuser.me.", amount);
     final var response = randomUserWebClient.get()
         .uri(uriBuilder -> uriBuilder.queryParam("results", amount)
+            .queryParam("inc","name,location,email")
             .build())
         .exchangeToMono(
             clientResponse -> clientResponse.bodyToMono(new ParameterizedTypeReference<RandomUserResponse<User>>() {}))

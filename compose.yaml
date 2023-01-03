@@ -98,3 +98,8 @@ services:
     volumes:
       - ./docker/kafka-init-topics/create-content.sh:/opt/bitnami/scripts/kafka/create-content.sh
     command: /opt/bitnami/scripts/kafka/create-content.sh
+
+  mongo:
+    image: mongo:6.0.3
+    ports:
+      - "27017:27017"

@@ -7,13 +7,21 @@ spring:
     bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
     key-serializer: org.apache.kafka.common.serialization.StringSerializer
     value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    properties:
+      spring.json:
+        add.type.headers: true
+        type.mapping: >
+          user:com.github.marceloleite2604.kafkaenvironment.producer.domain.user.User,
+          address:com.github.marceloleite2604.kafkaenvironment.producer.domain.address.Address
 
 producer:
   jobs:
     user-retrieval:
-      total-users: 1000
-      chunk-size: 200
-      buffered-users: 400
+      total-users: 1
+      chunk-size: 1
+      buffered-users: 1
+  kafka.topics:
+      users: users
 
 logging.level:
   root: INFO

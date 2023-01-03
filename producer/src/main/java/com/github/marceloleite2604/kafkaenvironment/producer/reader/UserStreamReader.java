@@ -1,6 +1,6 @@
 package com.github.marceloleite2604.kafkaenvironment.producer.reader;
 
-import com.github.marceloleite2604.kafkaenvironment.producer.entity.User;
+import com.github.marceloleite2604.kafkaenvironment.producer.domain.user.User;
 import com.github.marceloleite2604.kafkaenvironment.producer.properties.UserRetrievalJobProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.configuration.annotation.StepScope;

@@ -1,6 +1,4 @@
-package com.github.marceloleite2604.kafkaenvironment.producer.entity;
-
-import java.util.List;
+package com.github.marceloleite2604.kafkaenvironment.producer.domain;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,9 +10,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @NoArgsConstructor(force = true)
-public class RandomUserResponse<T> {
+public class RandomUserResultInformation {
 
-  private final List<T> results;
+  private final String seed;
 
-  private final RandomUserResultInformation info;
+  private final int results;
+
+  private final int page;
+
+  private final String version;
 }
