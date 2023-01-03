@@ -3,7 +3,6 @@ services:
     image: mongo:6.0.3
     ports:
       - "27017:27017"
-
   consumer:
     build:
       context: .
@@ -12,3 +11,4 @@ services:
       - ../.env
     mem_limit: 256m
     mem_reservation: 128m
+    

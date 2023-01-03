@@ -7,15 +7,17 @@ set \
  java.compiler \
  java.desktop \
  java.instrument \
- java.management \
- java.naming \
+ java.net.http \
  java.prefs \
  java.scripting \
  java.security.jgss \
  java.security.sasl \
- java.sql \
+ java.sql.rowset \
  jdk.jfr \
- jdk.unsupported;
+ jdk.management \
+ jdk.unsupported \
+ jdk.crypto.ec \
+ jdk.crypto.cryptoki;
 
 IFS=",";
 add_modules_value=$*
@@ -33,6 +35,14 @@ fi;
 
 echo "Jlink found on \"$jlink_bin\" path.";
 echo "The following modules will be added on Java runtime: $add_modules_value";
+
+echo "$jlink_bin" \
+  --add-modules "$add_modules_value" \
+  --strip-java-debug-attributes \
+  --no-man-pages \
+  --no-header-files \
+  --compress=2 \
+  --output /tmp/java-runtime;
 
 "$jlink_bin" \
   --add-modules "$add_modules_value" \
