@@ -3,7 +3,7 @@ spring:
   codec.max-in-memory-size: 10MB
   main.web-application-type: none
   kafka.producer:
-    client-id: ${KAFKA_CLIENT_ID:producer}
+    client-id: producer-${PRODUCER_ID:0}
     bootstrap-servers: >
       ${KAFKA_BOOTSTRAP_SERVERS:
       localhost:9092,
@@ -25,15 +25,15 @@ spring:
 producer:
   job.steps:
     users-retrieval:
-      total-items: ${USERS_RETRIEVAL_TOTAL_ITEMS:25000}
-      chunk-size: ${USERS_RETRIEVAL_CHUNK_SIZE:50}
+      total-items: ${USERS_RETRIEVAL_TOTAL_ITEMS:5000}
+      chunk-size: ${USERS_RETRIEVAL_CHUNK_SIZE:100}
       buffered-items: ${USERS_RETRIEVAL_BUFFERED_ITEMS:250}
-      failure-chance-rate: ${USERS_RETRIEVAL_FAILURE_CHANCE_RATE:0}
+      failure-chance-rate: ${USERS_RETRIEVAL_FAILURE_CHANCE_RATE:0.0001}
     addresses-retrieval:
-      total-items: ${ADDRESSES_RETRIEVAL_TOTAL_ITEMS:100000}
-      chunk-size: ${ADDRESSES_RETRIEVAL_CHUNK_SIZE:100}
-      buffered-items: ${ADDRESSES_RETRIEVAL_BUFFERED_ITEMS:10}
-      failure-chance-rate: ${ADDRESSES_RETRIEVAL_FAILURE_CHANCE_RATE:0}
+      total-items: ${ADDRESSES_RETRIEVAL_TOTAL_ITEMS:10000}
+      chunk-size: ${ADDRESSES_RETRIEVAL_CHUNK_SIZE:200}
+      buffered-items: ${ADDRESSES_RETRIEVAL_BUFFERED_ITEMS:400}
+      failure-chance-rate: ${ADDRESSES_RETRIEVAL_FAILURE_CHANCE_RATE:0.0001}
   kafka.topics:
     users: ${KAFKA_TOPICS_USERS:users}
     addresses: ${KAFKA_TOPICS_ADDRESSES:addresses}

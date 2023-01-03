@@ -8,7 +8,6 @@ services:
       - kafka-1
       - kafka-2
       - kafka-3
-      - schema-registry
     environment:
       KAFKA_CLUSTERS_0_NAME: "Kluster"
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-1:29092,kafka-2:29092,kafka-3:29092
@@ -116,5 +115,11 @@ services:
   producer:
     build:
       context: producer
+    restart: on-failure
     env_file:
       - .env
+    depends_on:
+      - kafka-1
+      - kafka-2
+      - kafka-3
+      - postgres
