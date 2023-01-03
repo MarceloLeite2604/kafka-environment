@@ -12,9 +12,12 @@ import lombok.extern.jackson.Jacksonized;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public class Street {
+public class Location {
+  private final Street street;
 
-  private final String name;
+  private final String city;
 
-  private final int number;
+  private final String state;
+
+  private final String country;
 }

@@ -31,7 +31,7 @@ public abstract class KafkaItemStreamWriter<T> implements ItemStreamWriter<T> {
   public void write(Chunk<? extends T> chunk) {
     chunk.iterator()
         .forEachRemaining(this::sendToKafka);
-    log.debug("{} items(s) sent to Kafka {} topic.", chunk.size(), topic);
+    log.debug("{} items(s) sent to Kafka \"{}\" topic.", chunk.size(), topic);
   }
 
   private void sendToKafka(T item) {

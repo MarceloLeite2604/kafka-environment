@@ -30,7 +30,7 @@ public class UserListener {
   }
 
   private User logConclusion(User user) {
-    log.info("First name: {}, last name: {}, email: {}", user.getFirstName(), user.getLastName(), user.getEmail());
+    log.info("User: {}", user);
     return user;
   }
 }

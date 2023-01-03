@@ -12,11 +12,15 @@ services:
       KAFKA_CLUSTERS_0_NAME: "Kluster"
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-1:29092,kafka-2:29092,kafka-3:29092
       KAFKA_CLUSTERS_0_METRICS_PORT: 5556,5556,5556
+    profiles:
+      - infrastructure
  
   zookeeper:
     image: bitnami/zookeeper:3.8
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
+    profiles:
+      - infrastructure
 
   kafka-1:
     image: bitnami/kafka:3.3.1
@@ -40,6 +44,8 @@ services:
       KAFKA_CFG_INTER_BROKER_LISTENER_NAME: 'DOCKER'
       KAFKA_CFG_LOG_DIRS: '/tmp/logs'
       JMX_PORT: 5556
+    profiles:
+      - infrastructure
 
   kafka-2:
     image: bitnami/kafka:3.3.1
@@ -63,6 +69,8 @@ services:
       KAFKA_CFG_INTER_BROKER_LISTENER_NAME: 'DOCKER'
       KAFKA_CFG_LOG_DIRS: '/tmp/logs'
       JMX_PORT: 5556
+    profiles:
+      - infrastructure
 
   kafka-3:
     image: bitnami/kafka:3.3.1
@@ -86,6 +94,8 @@ services:
       KAFKA_CFG_INTER_BROKER_LISTENER_NAME: 'DOCKER'
       KAFKA_CFG_LOG_DIRS: '/tmp/logs'
       JMX_PORT: 5556
+    profiles:
+      - infrastructure
 
   kafka-init-topics:
     image: bitnami/kafka:3.3.1
@@ -97,11 +107,15 @@ services:
     volumes:
       - ./docker/kafka-init-topics/create-content.sh:/opt/bitnami/scripts/kafka/create-content.sh
     command: /opt/bitnami/scripts/kafka/create-content.sh
+    profiles:
+      - infrastructure
 
   mongo:
     image: mongo:6.0.3
     ports:
       - "27017:27017"
+    profiles:
+      - infrastructure
 
   postgres:
     image: postgres:15.1-alpine
@@ -111,6 +125,8 @@ services:
       - POSTGRES_HOST_AUTH_METHOD=trust
       - POSTGRES_DB=kenv
       - POSTGRES_USER=scott
+    profiles:
+      - infrastructure
 
   producer-1:
     build:
@@ -125,6 +141,8 @@ services:
       - kafka-2
       - kafka-3
       - postgres
+    profiles:
+      - producers
 
   producer-2:
     build:
@@ -139,6 +157,8 @@ services:
       - kafka-2
       - kafka-3
       - postgres
+    profiles:
+      - producers
 
   producer-3:
     build:
@@ -153,4 +173,6 @@ services:
       - kafka-2
       - kafka-3
       - postgres
+    profiles:
+      - producers
   

@@ -4,14 +4,24 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.extern.jackson.Jacksonized;
+import lombok.ToString;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Jacksonized
+@Document("addresses")
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
+@ToString
 public class Address {
-  private final Street street;
+
+  @ToString.Exclude
+  @Id
+  private final String id;
+
+  private final String streetName;
+
+  private final Integer streetNumber;
 
   private final String city;
 

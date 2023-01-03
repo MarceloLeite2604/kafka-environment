@@ -1,6 +1,4 @@
-package com.github.marceloleite2604.kafkaenvironment.producer.domain;
-
-import java.util.List;
+package com.github.marceloleite2604.kafkaenvironment.consumer.domain.address.dto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,9 +10,12 @@ import lombok.extern.jackson.Jacksonized;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public class RandomUserResponse<T> {
+public class AddressDto {
+  private final StreetDto street;
 
-  private final List<T> results;
+  private final String city;
 
-  private final RandomUserResultInformation info;
+  private final String state;
+
+  private final String country;
 }

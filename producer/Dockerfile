@@ -21,6 +21,7 @@ ENV JAVA_HOME=/opt/java/openjdk
 ENV PRODUCER_ID=0
 COPY --chown=1001:1001 --from=jre-build /javaruntime $JAVA_HOME
 
+ENV JAVA_OPTS="-Xms64M -Xmx128M"
 COPY --chown=1001:1001 --from=build /tmp/target/*jar-with-dependencies.jar /opt/producer/app.jar
 COPY --chown=1001:1001 docker/entrypoint.sh /opt/producer/entrypoint.sh
 RUN chmod ug+xw /opt/producer/entrypoint.sh

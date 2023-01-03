@@ -1,40 +1,35 @@
 package com.github.marceloleite2604.kafkaenvironment.producer.step.user.reader;
 
-import java.util.Iterator;
-import java.util.List;
+import java.net.URI;
 
 import com.github.marceloleite2604.kafkaenvironment.producer.domain.RandomUserResponse;
+import com.github.marceloleite2604.kafkaenvironment.producer.domain.address.Address;
 import com.github.marceloleite2604.kafkaenvironment.producer.domain.user.User;
-import com.github.marceloleite2604.kafkaenvironment.producer.step.reader.ItemBuffer;
 import com.github.marceloleite2604.kafkaenvironment.producer.properties.UsersRetrievalJobProperties;
+import com.github.marceloleite2604.kafkaenvironment.producer.step.reader.RandomUserItemBuffer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.UriBuilder;
 
 @Component
 @Slf4j
-public class UserBuffer extends ItemBuffer<User> {
+public class UserBuffer extends RandomUserItemBuffer<User> {
 
-  private final WebClient randomUserWebClient;
-
-  public UserBuffer(WebClient randomUserWebClient, UsersRetrievalJobProperties usersRetrievalJobProperties) {
-    super(usersRetrievalJobProperties.getBufferedItems());
-    this.randomUserWebClient = randomUserWebClient;
+  public UserBuffer(UsersRetrievalJobProperties usersRetrievalJobProperties, WebClient randomUserWebClient) {
+    super(usersRetrievalJobProperties.getBufferedItems(), randomUserWebClient);
   }
 
   @Override
-  protected Iterator<User> retrieveIterator(int amount) {
-    log.debug("Retrieving {} user(s) from randomuser.me.", amount);
-    return randomUserWebClient.get()
-        .uri(uriBuilder -> uriBuilder.queryParam("results", amount)
-            .queryParam("inc", "name,location,email")
-            .build())
-        .exchangeToMono(
-            clientResponse -> clientResponse.bodyToMono(new ParameterizedTypeReference<RandomUserResponse<User>>() {}))
-        .blockOptional()
-        .map(RandomUserResponse::getResults)
-        .map(List::iterator)
-        .orElseThrow(() -> new IllegalStateException("Could not retrieve users from randomuser.me."));
+  protected URI buildUri(UriBuilder uriBuilder, int amount) {
+    return uriBuilder.queryParam("results", amount)
+        .queryParam("inc", "name,location,email")
+        .build();
+  }
+
+  @Override
+  protected ParameterizedTypeReference<RandomUserResponse<User>> retrieveParameterizedTypeReference() {
+    return new ParameterizedTypeReference<>() {};
   }
 }

@@ -1,4 +1,4 @@
-package com.github.marceloleite2604.kafkaenvironment.consumer.domain.address;
+package com.github.marceloleite2604.kafkaenvironment.consumer.domain.address.dto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.extern.jackson.Jacksonized;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public class Street {
+public class StreetDto {
 
   private final String name;
 

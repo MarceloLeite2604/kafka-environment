@@ -1,20 +1,16 @@
 package com.github.marceloleite2604.kafkaenvironment.producer.domain;
 
-import java.util.List;
-
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.extern.jackson.Jacksonized;
 
-@Jacksonized
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @Getter
-public class RandomUserResponse<T> {
+public class ErrorResponse {
 
-  private final List<T> results;
-
-  private final RandomUserResultInformation info;
+  private final String error;
 }
