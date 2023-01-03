@@ -7,6 +7,7 @@ public class BeanNames {
 
   public static final String RANDOM_USER_WEB_CLIENT = "randomUserWebClient";
   public static final String TASK_EXECUTOR = "taskExecutor";
+  public static final String JOB_REGISTRY_BEAN_POST_PROCESSOR = "jobRegistryBeanPostProcessor";
 
   @UtilityClass
   public static class Job {

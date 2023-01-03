@@ -1,4 +1,5 @@
 spring:
+  batch.jdbc.initialize-schema: always
   codec:
     max-in-memory-size: 10MB
   main.web-application-type: none
@@ -13,20 +14,26 @@ spring:
         type.mapping: >
           user:com.github.marceloleite2604.kafkaenvironment.producer.domain.user.User,
           address:com.github.marceloleite2604.kafkaenvironment.producer.domain.address.Address
+  datasource:
+    type:
+    url: jdbc:postgresql://localhost:5432/kenv
+    username: scott
 
 producer:
-  jobs:
+  job.steps:
     users-retrieval:
-      total-items: 250
+      total-items: 25000
       chunk-size: 50
       buffered-items: 250
+      failure-chance-rate: 0.001
     addresses-retrieval:
-      total-items: 500
+      total-items: 100000
       chunk-size: 100
       buffered-items: 10
+      failure-chance-rate: 0.001
   kafka.topics:
-      users: users
-      addresses: addresses
+    users: users
+    addresses: addresses
 
 logging.level:
   root: INFO

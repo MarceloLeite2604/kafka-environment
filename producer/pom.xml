@@ -42,19 +42,8 @@
       <artifactId>lombok</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.hsqldb</groupId>
-      <artifactId>hsqldb</artifactId>
-      <scope>runtime</scope>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
     </dependency>
   </dependencies>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
-
 </project>

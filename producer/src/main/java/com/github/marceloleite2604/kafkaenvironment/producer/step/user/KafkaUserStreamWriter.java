@@ -1,8 +1,8 @@
-package com.github.marceloleite2604.kafkaenvironment.producer.writer;
+package com.github.marceloleite2604.kafkaenvironment.producer.step.user;
 
 import com.github.marceloleite2604.kafkaenvironment.producer.domain.KafkaTopic;
-import com.github.marceloleite2604.kafkaenvironment.producer.domain.address.Address;
 import com.github.marceloleite2604.kafkaenvironment.producer.domain.user.User;
+import com.github.marceloleite2604.kafkaenvironment.producer.step.writer.KafkaItemStreamWriter;
 import com.github.marceloleite2604.kafkaenvironment.producer.properties.KafkaProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.configuration.annotation.StepScope;
@@ -12,8 +12,9 @@ import org.springframework.stereotype.Component;
 @Component
 @StepScope
 @Slf4j
-public class KafkaAddressStreamWriter extends KafkaItemStreamWriter<Address> {
-  public KafkaAddressStreamWriter(KafkaTemplate<String, Address> kafkaTemplate, KafkaProperties kafkaProperties) {
-    super(kafkaTemplate, kafkaProperties, KafkaTopic.ADDRESSES);
+public class KafkaUserStreamWriter extends KafkaItemStreamWriter<User> {
+
+  public KafkaUserStreamWriter(KafkaTemplate<String, User> kafkaTemplate, KafkaProperties kafkaProperties) {
+    super(kafkaTemplate, kafkaProperties, KafkaTopic.USERS);
   }
 }

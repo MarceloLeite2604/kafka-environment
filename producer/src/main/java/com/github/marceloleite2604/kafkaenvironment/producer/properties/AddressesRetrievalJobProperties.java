@@ -4,10 +4,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
 @Validated
-@ConfigurationProperties(PropertiesPath.Jobs.ADDRESSES_RETRIEVAL)
-public class AddressesRetrievalJobProperties extends ItemsRetrievalJobProperties {
+@ConfigurationProperties(PropertiesPath.Steps.ADDRESSES_RETRIEVAL)
+public class AddressesRetrievalJobProperties extends ItemsRetrievalStepProperties {
 
-  public AddressesRetrievalJobProperties(int totalItems, int chunkSize, int bufferedItems) {
-    super(totalItems, chunkSize, bufferedItems);
+  public AddressesRetrievalJobProperties(
+      int totalItems,
+      int chunkSize,
+      int bufferedItems,
+      float failureChanceRate) {
+    super(totalItems, chunkSize, bufferedItems, failureChanceRate);
   }
 }

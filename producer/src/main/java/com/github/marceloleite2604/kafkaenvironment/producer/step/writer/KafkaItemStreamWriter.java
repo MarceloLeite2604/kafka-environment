@@ -1,4 +1,4 @@
-package com.github.marceloleite2604.kafkaenvironment.producer.writer;
+package com.github.marceloleite2604.kafkaenvironment.producer.step.writer;
 
 import com.github.marceloleite2604.kafkaenvironment.producer.domain.KafkaTopic;
 import com.github.marceloleite2604.kafkaenvironment.producer.properties.KafkaProperties;
