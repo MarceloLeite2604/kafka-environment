@@ -10,7 +10,7 @@ public class WebClientConfiguration {
   @Bean(BeanNames.RANDOM_USER_WEB_CLIENT)
   public WebClient createRandomUserWebClient(WebClient.Builder webClientBuilder) {
     return webClientBuilder
-        .baseUrl("https://randomuser.me/api")
+        .baseUrl("http://randomuser.me/api")
         .build();
   }
 }

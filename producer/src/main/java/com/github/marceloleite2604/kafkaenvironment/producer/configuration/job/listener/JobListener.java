@@ -7,7 +7,6 @@ import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.launch.JobOperator;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
-import sun.misc.Signal;
 
 @RequiredArgsConstructor
 @Component
@@ -19,9 +18,9 @@ public class JobListener implements JobExecutionListener {
   @Override
   public void beforeJob(@NonNull JobExecution jobExecution) {
 
-    final var signalHandler = new StopJobInterruptSignalHandler(jobOperator, jobExecution);
+    final var stopJobThread = new StopJobThread(jobOperator, jobExecution);
 
-    log.debug("Adding stop job interrupt signal handler.");
-    Signal.handle(new Signal("INT"), signalHandler);
+    Runtime.getRuntime()
+        .addShutdownHook(stopJobThread);
   }
 }

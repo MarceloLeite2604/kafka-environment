@@ -6,30 +6,31 @@ import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.launch.JobExecutionNotRunningException;
 import org.springframework.batch.core.launch.JobOperator;
 import org.springframework.batch.core.launch.NoSuchJobExecutionException;
-import sun.misc.Signal;
-import sun.misc.SignalHandler;
 
 @RequiredArgsConstructor
 @Slf4j
-public class StopJobInterruptSignalHandler implements SignalHandler {
+public class StopJobThread extends Thread {
 
   private final JobOperator jobOperator;
 
   private final JobExecution jobExecution;
 
   @Override
-  public void handle(Signal signal) {
-    if ("INT".equals(signal.getName())) {
-      log.info("Interrupted signal received. Stopping job instance \"{}\" execution {}.", jobExecution.getJobInstance()
-          .getJobName(), jobExecution.getId());
+  public void run() {
+    log.debug("Executing stop job thread.");
+    if (jobExecution.isRunning()) {
+      log.debug("Job is running.");
       try {
         if (!jobOperator.stop(jobExecution.getId())) {
           log.warn("Could not stop job instance \"{}\" execution {}.", jobExecution.getJobInstance()
               .getJobName(), jobExecution.getId());
+        } else {
+          log.debug("Job stopped successfully.");
         }
       } catch (NoSuchJobExecutionException | JobExecutionNotRunningException exception) {
-        log.error("Exception thrown while stopping job instance \"{}\" execution {}.", jobExecution.getJobInstance()
-            .getJobName(), jobExecution.getId());
+        log.error("Exception thrown while stopping job instance \"{}\" execution {}.",
+            jobExecution.getJobInstance()
+                .getJobName(), jobExecution.getId());
       }
     }
   }

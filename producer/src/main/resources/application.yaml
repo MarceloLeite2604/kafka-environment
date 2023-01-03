@@ -1,11 +1,14 @@
 spring:
   batch.jdbc.initialize-schema: always
-  codec:
-    max-in-memory-size: 10MB
+  codec.max-in-memory-size: 10MB
   main.web-application-type: none
   kafka.producer:
-    client-id: producer
-    bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
+    client-id: ${KAFKA_CLIENT_ID:producer}
+    bootstrap-servers: >
+      ${KAFKA_BOOTSTRAP_SERVERS:
+      localhost:9092,
+      localhost:9093,
+      localhost:9094}
     key-serializer: org.apache.kafka.common.serialization.StringSerializer
     value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     properties:
@@ -15,26 +18,27 @@ spring:
           user:com.github.marceloleite2604.kafkaenvironment.producer.domain.user.User,
           address:com.github.marceloleite2604.kafkaenvironment.producer.domain.address.Address
   datasource:
-    type:
-    url: jdbc:postgresql://localhost:5432/kenv
-    username: scott
+    url: jdbc:postgresql://${DATASOURCE_HOST:localhost}:${DATASOURCE_PORT:5432}/${DATASOURCE_DB:kenv}
+    username: ${DATASOURCE_USERNAME:scott}
+    password: ${DATASOURCE_PASSWORD:}
 
 producer:
   job.steps:
     users-retrieval:
-      total-items: 25000
-      chunk-size: 50
-      buffered-items: 250
-      failure-chance-rate: 0.001
+      total-items: ${USERS_RETRIEVAL_TOTAL_ITEMS:25000}
+      chunk-size: ${USERS_RETRIEVAL_CHUNK_SIZE:50}
+      buffered-items: ${USERS_RETRIEVAL_BUFFERED_ITEMS:250}
+      failure-chance-rate: ${USERS_RETRIEVAL_FAILURE_CHANCE_RATE:0}
     addresses-retrieval:
-      total-items: 100000
-      chunk-size: 100
-      buffered-items: 10
-      failure-chance-rate: 0.001
+      total-items: ${ADDRESSES_RETRIEVAL_TOTAL_ITEMS:100000}
+      chunk-size: ${ADDRESSES_RETRIEVAL_CHUNK_SIZE:100}
+      buffered-items: ${ADDRESSES_RETRIEVAL_BUFFERED_ITEMS:10}
+      failure-chance-rate: ${ADDRESSES_RETRIEVAL_FAILURE_CHANCE_RATE:0}
   kafka.topics:
-    users: users
-    addresses: addresses
+    users: ${KAFKA_TOPICS_USERS:users}
+    addresses: ${KAFKA_TOPICS_ADDRESSES:addresses}
 
 logging.level:
-  root: INFO
-  com.github.marceloleite2604.kafkaenvironment.producer: DEBUG
+  root: ${LOGGING_LEVEL_ROOT:INFO}
+  io.netty.handler.ssl: DEBUG
+  com.github.marceloleite2604.kafkaenvironment.producer: ${LOGGING_LEVEL_APP:DEBUG}
