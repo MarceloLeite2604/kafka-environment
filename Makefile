@@ -1,3 +1,5 @@
+IMAGES = $(strip $(shell docker images -q -f label=com.docker.compose.project=kenv))
+
 up: build
 	docker compose up -d
 
@@ -8,4 +10,10 @@ build:
 	docker compose build
 
 delete-images:
-	docker rmi $(docker images -f label=com.docker.compose.project=kenv -q)
+ifneq ($(IMAGES),)
+	docker rmi -f $(IMAGES)
+else
+	$(info No images to remove)
+endif
+
+clean: down delete-images
