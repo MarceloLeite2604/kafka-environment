@@ -1,0 +1,20 @@
+spring:
+  codec:
+    max-in-memory-size: 10MB
+  main.web-application-type: none
+  kafka.producer:
+    client-id: producer
+    bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
+    key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+producer:
+  jobs:
+    user-retrieval:
+      total-users: 1000
+      chunk-size: 200
+      buffered-users: 400
+
+logging.level:
+  root: INFO
+  com.github.marceloleite2604.kafkaenvironment.producer: DEBUG
