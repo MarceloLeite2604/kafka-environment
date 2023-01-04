@@ -19,7 +19,9 @@ public class UserListener {
 
   private final UserService userService;
 
-  @KafkaListener(topics = "${consumer.kafka.topics.users}")
+  @KafkaListener(
+      topics = "${consumer.kafka.topics.users}",
+      clientIdPrefix = "${spring.kafka.consumer.client-id}-users")
   public void listenUserTopic(UserDto userDto) {
 
     Mono.just(userDto)
@@ -30,7 +32,7 @@ public class UserListener {
   }
 
   private User logConclusion(User user) {
-    log.info("User: {}", user);
+    log.debug("User: {}", user);
     return user;
   }
 }

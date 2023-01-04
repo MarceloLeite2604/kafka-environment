@@ -5,8 +5,8 @@ import com.github.marceloleite2604.kafkaenvironment.producer.configuration.BeanN
 import com.github.marceloleite2604.kafkaenvironment.producer.configuration.job.listener.JobListener;
 import com.github.marceloleite2604.kafkaenvironment.producer.domain.address.Address;
 import com.github.marceloleite2604.kafkaenvironment.producer.domain.user.User;
-import com.github.marceloleite2604.kafkaenvironment.producer.properties.AddressesRetrievalJobProperties;
-import com.github.marceloleite2604.kafkaenvironment.producer.properties.UsersRetrievalJobProperties;
+import com.github.marceloleite2604.kafkaenvironment.producer.properties.AddressesRetrievalStepProperties;
+import com.github.marceloleite2604.kafkaenvironment.producer.properties.UsersRetrievalStepProperties;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.JobRegistry;
@@ -31,13 +31,13 @@ public class JobConfiguration {
   public Step createUsersRetrievalStep(
       JobRepository jobRepository,
       PlatformTransactionManager platformTransactionManager,
-      UsersRetrievalJobProperties usersRetrievalJobProperties,
+      UsersRetrievalStepProperties usersRetrievalStepProperties,
       ItemReader<User> userItemReader,
       ItemWriter<User> userItemWriter,
       ObjectMapper objectMapper) {
 
     return new StepBuilder("Users Retrieval Step", jobRepository).<User, User>chunk(
-            usersRetrievalJobProperties.getChunkSize(),
+            usersRetrievalStepProperties.getChunkSize(),
             platformTransactionManager)
         .reader(userItemReader)
         .writer(userItemWriter)
@@ -48,7 +48,7 @@ public class JobConfiguration {
   public Step createAddressesRetrievalStep(
       JobRepository jobRepository,
       PlatformTransactionManager platformTransactionManager,
-      AddressesRetrievalJobProperties addressRetrievalJobProperties,
+      AddressesRetrievalStepProperties addressRetrievalJobProperties,
       ItemReader<Address> addressItemReader,
       ItemWriter<Address> addressItemWriter,
       ObjectMapper objectMapper) {

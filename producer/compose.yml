@@ -1,13 +1,39 @@
+name: kenv
 services:
+  kafka-ui:
+    extends:
+      file: ../infrastructure/compose.yml
+      service: kafka-ui
+ 
+  zookeeper:
+    extends:
+      file: ../infrastructure/compose.yml
+      service: zookeeper
+
+  kafka-1:
+    extends:
+      file: ../infrastructure/compose.yml
+      service: kafka-1
+
+  kafka-2:
+    extends:
+      file: ../infrastructure/compose.yml
+      service: kafka-2
+
+  kafka-3:
+    extends:
+      file: ../infrastructure/compose.yml
+      service: kafka-3
+
+  kafka-init-topics:
+    extends:
+      file: ../infrastructure/compose.yml
+      service: kafka-init-topics
+
   postgres:
-    image: postgres:15.1-alpine
-    restart: on-failure
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_HOST_AUTH_METHOD=trust
-      - POSTGRES_DB=kenv
-      - POSTGRES_USER=scott
+    extends:
+      file: ../infrastructure/compose.yml
+      service: postgres
 
   producer:
     build:
@@ -17,3 +43,6 @@ services:
       - ../.env
     mem_limit: 256m
     mem_reservation: 128m
+    depends_on:
+      kafka-init-topics:
+        condition: service_completed_successfully

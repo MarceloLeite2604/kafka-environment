@@ -4,7 +4,7 @@ import java.net.URI;
 
 import com.github.marceloleite2604.kafkaenvironment.producer.domain.RandomUserResponse;
 import com.github.marceloleite2604.kafkaenvironment.producer.domain.address.Address;
-import com.github.marceloleite2604.kafkaenvironment.producer.properties.AddressesRetrievalJobProperties;
+import com.github.marceloleite2604.kafkaenvironment.producer.properties.AddressesRetrievalStepProperties;
 import com.github.marceloleite2604.kafkaenvironment.producer.step.reader.RandomUserItemBuffer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
@@ -16,8 +16,8 @@ import org.springframework.web.util.UriBuilder;
 @Slf4j
 public class AddressBuffer extends RandomUserItemBuffer<Address> {
 
-  public AddressBuffer(AddressesRetrievalJobProperties addressesRetrievalJobProperties, WebClient randomUserWebClient) {
-    super(addressesRetrievalJobProperties.getBufferedItems(), randomUserWebClient);
+  public AddressBuffer(AddressesRetrievalStepProperties addressesRetrievalStepProperties, WebClient randomUserWebClient) {
+    super(addressesRetrievalStepProperties.getBufferedItems(), randomUserWebClient);
   }
 
   @Override

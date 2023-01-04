@@ -1,12 +1,9 @@
 package com.github.marceloleite2604.kafkaenvironment.producer.step.reader;
 
-import java.security.SecureRandom;
-import java.util.Random;
-
 import com.github.marceloleite2604.kafkaenvironment.producer.exception.SimulatedErrorException;
-import com.github.marceloleite2604.kafkaenvironment.producer.step.reader.context.Context;
-import com.github.marceloleite2604.kafkaenvironment.producer.step.reader.context.ContextWrapper;
 import com.github.marceloleite2604.kafkaenvironment.producer.properties.ItemsRetrievalStepProperties;
+import com.github.marceloleite2604.kafkaenvironment.producer.step.context.Context;
+import com.github.marceloleite2604.kafkaenvironment.producer.step.context.ContextWrapper;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +11,9 @@ import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.ItemStreamException;
 import org.springframework.batch.item.ItemStreamReader;
 import org.springframework.lang.NonNull;
+
+import java.security.SecureRandom;
+import java.util.Random;
 
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 @Slf4j
@@ -29,12 +29,12 @@ public abstract class BufferedItemStreamReader<T> implements ItemStreamReader<T>
 
   @Override
   public T read() {
-    if (context.getItemsRead() >= context.getTotalItems()) {
+    if (context.getItemsManipulated() >= context.getTotalItems()) {
       return null;
     }
 
     final var item = itemBuffer.read();
-    context.incrementItemsRead();
+    context.incrementItemsManipulated();
     checkIfSimulatedErrorMustBeThrown();
     return item;
   }
@@ -49,13 +49,11 @@ public abstract class BufferedItemStreamReader<T> implements ItemStreamReader<T>
   @Override
   public void open(@NonNull ExecutionContext executionContext) throws ItemStreamException {
     context = createContextWrapper(executionContext).restore();
-    log.debug("Restored context: {}", context);
   }
 
   @Override
   public void update(@NonNull ExecutionContext executionContext) throws ItemStreamException {
     createContextWrapper(executionContext).save();
-    log.debug("Saved context: {}", executionContext);
   }
 
   private ContextWrapper createContextWrapper(ExecutionContext executionContext) {

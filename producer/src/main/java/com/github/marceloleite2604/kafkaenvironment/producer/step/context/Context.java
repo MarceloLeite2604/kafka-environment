@@ -1,4 +1,4 @@
-package com.github.marceloleite2604.kafkaenvironment.producer.step.reader.context;
+package com.github.marceloleite2604.kafkaenvironment.producer.step.context;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,17 +14,21 @@ import lombok.extern.jackson.Jacksonized;
 @ToString
 public class Context {
 
-  private int itemsRead;
+  private int itemsManipulated;
 
   private int totalItems;
 
-  public void incrementItemsRead() {
-    itemsRead++;
+  public void incrementItemsManipulated() {
+    itemsManipulated++;
+  }
+
+  public void incrementItemsManipulated(int amount) {
+    itemsManipulated += amount;
   }
 
   @UtilityClass
   public static class Properties {
-    public static final String ITEMS_READ = "items-read";
+    public static final String ITEMS_MANIPULATED = "items-manipulated";
     public static final String TOTAL_ITEMS = "total-items";
   }
 }

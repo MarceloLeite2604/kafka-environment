@@ -7,8 +7,8 @@ services:
     profiles:
       - default
       - infrastructure
-      - producers
-      - consumers
+      - producer
+      - consumer
  
   zookeeper:
     extends:
@@ -17,8 +17,8 @@ services:
     profiles:
       - default
       - infrastructure
-      - producers
-      - consumers
+      - producer
+      - consumer
 
   kafka-1:
     extends:
@@ -27,8 +27,8 @@ services:
     profiles:
       - default
       - infrastructure
-      - producers
-      - consumers
+      - producer
+      - consumer
 
   kafka-2:
     extends:
@@ -37,8 +37,8 @@ services:
     profiles:
       - default
       - infrastructure
-      - producers
-      - consumers
+      - producer
+      - consumer
 
   kafka-3:
     extends:
@@ -47,8 +47,8 @@ services:
     profiles:
       - default
       - infrastructure
-      - producers
-      - consumers
+      - producer
+      - consumer
 
   kafka-init-topics:
     extends:
@@ -57,17 +57,17 @@ services:
     profiles:
       - default
       - infrastructure
-      - producers
-      - consumers
+      - producer
+      - consumer
 
   postgres:
     extends:
-      file: producer/compose.yml
+      file: infrastructure/compose.yml
       service: postgres
     profiles:
       - default
       - infrastructure
-      - producers
+      - producer
 
   producer-1:
     extends:
@@ -77,18 +77,23 @@ services:
       - PRODUCER_ID=1
     profiles:
       - default
-      - producers
+      - producer
+    depends_on:
+      kafka-init-topics:
+        condition: service_completed_successfully
 
   producer-2:
     extends:
       file: producer/compose.yml
       service: producer
-    
     environment:
       - PRODUCER_ID=2
     profiles:
       - default
-      - producers
+      - producer
+    depends_on:
+      kafka-init-topics:
+        condition: service_completed_successfully
 
   producer-3:
     extends:
@@ -98,16 +103,22 @@ services:
       - PRODUCER_ID=3
     profiles:
       - default
-      - producers
+      - producer
+    depends_on:
+      kafka-init-topics:
+        condition: service_completed_successfully
 
   mongo:
     extends:
-      file: consumer/compose.yml
+      file: infrastructure/compose.yml
       service: mongo
     profiles:
       - default
       - infrastructure
-      - consumers
+      - consumer
+    depends_on:
+      kafka-init-topics:
+        condition: service_completed_successfully
   
   consumer-1:
     extends:
@@ -117,7 +128,10 @@ services:
       - CONSUMER_ID=1
     profiles:
       - default
-      - consumers
+      - consumer
+    depends_on:
+      kafka-init-topics:
+        condition: service_completed_successfully
 
   consumer-2:
     extends:
@@ -127,7 +141,10 @@ services:
       - CONSUMER_ID=2
     profiles:
       - default
-      - consumers
+      - consumer
+    depends_on:
+      kafka-init-topics:
+        condition: service_completed_successfully
 
   consumer-3:
     extends:
@@ -137,4 +154,7 @@ services:
       - CONSUMER_ID=3
     profiles:
       - default
-      - consumers
+      - consumer
+    depends_on:
+      kafka-init-topics:
+        condition: service_completed_successfully

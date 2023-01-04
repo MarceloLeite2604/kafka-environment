@@ -3,9 +3,8 @@ package com.github.marceloleite2604.kafkaenvironment.producer.step.user.reader;
 import java.net.URI;
 
 import com.github.marceloleite2604.kafkaenvironment.producer.domain.RandomUserResponse;
-import com.github.marceloleite2604.kafkaenvironment.producer.domain.address.Address;
 import com.github.marceloleite2604.kafkaenvironment.producer.domain.user.User;
-import com.github.marceloleite2604.kafkaenvironment.producer.properties.UsersRetrievalJobProperties;
+import com.github.marceloleite2604.kafkaenvironment.producer.properties.UsersRetrievalStepProperties;
 import com.github.marceloleite2604.kafkaenvironment.producer.step.reader.RandomUserItemBuffer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
@@ -17,8 +16,8 @@ import org.springframework.web.util.UriBuilder;
 @Slf4j
 public class UserBuffer extends RandomUserItemBuffer<User> {
 
-  public UserBuffer(UsersRetrievalJobProperties usersRetrievalJobProperties, WebClient randomUserWebClient) {
-    super(usersRetrievalJobProperties.getBufferedItems(), randomUserWebClient);
+  public UserBuffer(UsersRetrievalStepProperties usersRetrievalStepProperties, WebClient randomUserWebClient) {
+    super(usersRetrievalStepProperties.getBufferedItems(), randomUserWebClient);
   }
 
   @Override

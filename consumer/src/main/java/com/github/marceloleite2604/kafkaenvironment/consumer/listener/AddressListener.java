@@ -20,7 +20,9 @@ public class AddressListener {
 
   private final AddressService addressService;
 
-  @KafkaListener(topics = "${consumer.kafka.topics.addresses}")
+  @KafkaListener(
+      topics = "${consumer.kafka.topics.addresses}",
+      clientIdPrefix = "${spring.kafka.consumer.client-id}-addresses")
   public void listenUserTopic(AddressDto addressDto) {
 
     Mono.just(addressDto)
@@ -31,7 +33,7 @@ public class AddressListener {
   }
 
   private Address logConclusion(Address address) {
-    log.info("Address: {}", address);
+    log.debug("Address: {}", address);
     return address;
   }
 }
