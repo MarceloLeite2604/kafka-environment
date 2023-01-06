@@ -8,6 +8,9 @@ import lombok.Builder;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.jackson.Jacksonized;
 
+/* It seems that Jackson has a bug on its implicit constructor detection. It does not recognize them when they only
+have a single parameter ("location", in this case). As a workaround, we can use Lombok "@Jacksonized" to
+annotate the builder class with @JsonDeserialize annotation. */
 @Jacksonized
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

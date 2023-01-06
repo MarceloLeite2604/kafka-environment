@@ -116,9 +116,6 @@ services:
       - default
       - infrastructure
       - consumer
-    depends_on:
-      kafka-init-topics:
-        condition: service_completed_successfully
   
   consumer-1:
     extends:
