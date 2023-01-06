@@ -10,15 +10,27 @@ import org.hibernate.validator.constraints.Range;
 @Getter
 public abstract class ItemsRetrievalStepProperties {
 
+  /**
+   * Total items to be retrieved by the step. Must be positive.
+   */
   @Positive
   private final int totalItems;
 
+  /**
+   * Amount of items to be processed by each chunk. Must be positive.
+   */
   @Positive
   private final int chunkSize;
 
+  /**
+   * How many items will be buffered for reading. Must be positive.
+   */
   @Positive
   private final int bufferedItems;
 
+  /**
+   * The rate chance of a simulated failure while reading items. Must be a value between 0.0 and 1.0.
+   */
   @Range(max = 1L)
   private final float failureChanceRate;
 }
